@@ -24,7 +24,28 @@ public class MyBST<Ttype> {
 		}
 	}
 	
+	public void add(Ttype elem) throws Exception{
+		if(isFull()) {
+			throw new Exception("Koks ir pilns un nevar vairs pievienot jaunus elementus");
+		}
+		addHelper(rootNode, elem);
+		howManyElements++;
+		
+		
+	}
 	
+	private void addHelper(MyNode<Ttype> root, Ttype elem) {
+		if(root != null) {
+			
+			if (((Comparable)elem).compareTo(root.getElement()) > 0) {
+				addHelper(root.getRightChNode(), elem);
+			}
+			else {
+				addHelper(root.getLeftChNode(), elem);
+			}
+			//TODO pabeigt
+		}
+	}
 	
 	
 	
