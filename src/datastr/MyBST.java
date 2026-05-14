@@ -40,16 +40,59 @@ public class MyBST<Ttype> {
 		
 	}
 	
-	private void addHelper(MyNode<Ttype> root, Ttype elem) {
-		if(root != null) {
+	private void addHelper(MyNode<Ttype> nodeTemp, Ttype elem) {
+		if(nodeTemp != null) {
 			
-			if (((Comparable)elem).compareTo(root.getElement()) > 0) {
-				addHelper(root.getRightChNode(), elem);
+			if (((Comparable)elem).compareTo(nodeTemp.getElement()) > 0) { //novietosies pa labi
+				//ja laba puse neka nav
+				if(nodeTemp.getRightChNode() == null) {
+					MyNode<Ttype> newNode = new MyNode<Ttype>(elem);
+					newNode.setParentNode(nodeTemp);
+					nodeTemp.setRightChNode(newNode);
+				}
+				else {
+					addHelper(nodeTemp.getRightChNode(), elem);
+				}
 			}
-			else {
-				addHelper(root.getLeftChNode(), elem);
+			
+			else {//novietosies pa kreisi
+				//ja kreisa puse neka nav
+				if(nodeTemp.getLeftChNode() == null) {
+					MyNode<Ttype> newNode = new MyNode<Ttype>(elem);
+					newNode.setParentNode(nodeTemp);
+					nodeTemp.setLeftChNode(newNode);
+				}
+				else {
+					addHelper(nodeTemp.getLeftChNode(), elem);
+				}	
 			}
-			//TODO pabeigt
+		}
+	}
+	
+	public void print() throws Exception {
+		if (isEmpty()) {
+			throw new Exception("Kaudze ir tukša un to nevar izprintēt");
+		}
+
+		printHelper(rootNode);
+	}
+
+	private void printHelper(MyNode<Ttype> nodeTemp) {
+		if (nodeTemp != null) {
+			System.out.println("P: " + nodeTemp.getElement());
+			// noskaidrojam, vai eksiste kreisais bērns
+			if (nodeTemp.getLeftChNode() != null) {
+				System.out.println(
+						"P: " + nodeTemp.getElement() + " Left child: " + nodeTemp.getLeftChNode().getElement());
+				// izpildi so pasu funkciju uz kreiso bērnu
+				printHelper(nodeTemp.getLeftChNode());
+			}
+			// noskaidrojam, vai eksistē labais bērns
+			if (nodeTemp.getRightChNode() != null) {
+				System.out.println(
+						"P: " + nodeTemp.getElement() + " Right child: " + nodeTemp.getRightChNode().getElement());
+				printHelper(nodeTemp.getRightChNode());
+			}
 		}
 	}
 	
