@@ -136,6 +136,88 @@ public class MyBST<Ttype> {
 		return false;
 	}
 	
+	public void remove(Ttype elem) throws Exception{
+		if (isEmpty()) {
+			throw new Exception("Kaudze ir tukša");
+		}
+	}
+	
+	private void removeHelper(MyNode<Ttype> nodeTemp, Ttype elem) throws Exception{
+		if(nodeTemp != null) {
+			//ja sakrit tad atgriezam ka ir atrasts
+			if(nodeTemp.getElement().equals(elem)) {
+				//varianti
+				//ja nav berni
+				if(nodeTemp.getLeftChNode() == null && nodeTemp.getRightChNode() == null) {
+					MyNode<Ttype> parentNode = nodeTemp.getParentNode();
+					//ja dzesamais elem ir lielaks par savu vecaku, tad tas ir labais berns
+					if(((Comparable)nodeTemp.getElement()).compareTo(parentNode.getElement()) > 0) {
+						parentNode.setRightChNode(null);
+					}
+					//ja ne tad tad ir kreisais
+					else {
+						parentNode.setLeftChNode(null);
+					}
+				}
+				//ja ir berni
+				//ja ir tikai kreisais berns
+				else if(nodeTemp.getLeftChNode() != null && nodeTemp.getRightChNode() == null) {
+					MyNode<Ttype> parentNode = nodeTemp.getParentNode();
+					MyNode<Ttype> leftChNode = nodeTemp.getRightChNode();
+					//ja dzesamais elem ir lielaks par savu vecaku, tad tas ir labais berns
+					if(((Comparable)nodeTemp.getElement()).compareTo(parentNode.getElement()) > 0) {
+						parentNode.setRightChNode(leftChNode);
+						leftChNode.setParentNode(parentNode);
+					}
+					//ja ne tad tad ir kreisais
+					else {
+						parentNode.setLeftChNode(leftChNode);
+						leftChNode.setParentNode(parentNode);
+					}
+				}
+				//ja ir tikai labais berns
+				else if(nodeTemp.getLeftChNode() == null && nodeTemp.getRightChNode() != null) {
+					MyNode<Ttype> parentNode = nodeTemp.getParentNode();
+					MyNode<Ttype> rightChNode = nodeTemp.getRightChNode();
+					//ja dzesamais elem ir lielaks par savu vecaku, tad tas ir labais berns
+					if(((Comparable)nodeTemp.getElement()).compareTo(parentNode.getElement()) > 0) {
+						parentNode.setRightChNode(rightChNode);
+						rightChNode.setParentNode(parentNode);
+					}
+					//ja ne tad tad ir kreisais
+					else {
+						parentNode.setLeftChNode(rightChNode);
+						rightChNode.setParentNode(parentNode);
+					}
+				}
+				//ir abi berni
+				else {
+					//TODO uztaisit tuvaka elementa atrasanas algoritmu lai to ievietotu dzesamaja elementa
+					//TODO notestet dzesanu mainservice
+					
+				}
+				
+			}
+				
+				
+			//turpina meklet
+		else {
+			//meklesana notiks pa labo pusi
+			if(((Comparable)elem).compareTo(nodeTemp.getElement()) > 0) {
+				//parbauda vai eksisste labais node
+				if (nodeTemp.getRightChNode() != null) {
+					removeHelper(nodeTemp.getRightChNode(), elem);
+				}
+			}
+				// ja eksiste turpina pa kreiso pusi
+			else {
+					if (nodeTemp.getLeftChNode() != null) {
+						removeHelper(nodeTemp.getLeftChNode(), elem);
+					}
+			}
+		}
+		}
+	}
 	
 	
 	
