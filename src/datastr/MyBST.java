@@ -28,9 +28,15 @@ public class MyBST<Ttype> {
 		if(isFull()) {
 			throw new Exception("Koks ir pilns un nevar vairs pievienot jaunus elementus");
 		}
-		addHelper(rootNode, elem);
+		//koks ir tuk'ss, tad ieliekam primo ka root
+		if(isEmpty()) {
+			MyNode<Ttype> newNode = new MyNode<Ttype>(elem);
+			rootNode = newNode;
+		}
+		else {
+			addHelper(rootNode, elem);
+		}
 		howManyElements++;
-		
 		
 	}
 	
