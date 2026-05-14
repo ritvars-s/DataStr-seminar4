@@ -16,6 +16,7 @@ public class MainService {
 			bst1.add(7);
 			
 			bst1.print();
+			System.out.println(bst1.search(10));
 			
 			
 		}

@@ -96,6 +96,47 @@ public class MyBST<Ttype> {
 		}
 	}
 	
+	public boolean search(Ttype elem) throws Exception{
+		if (isEmpty()) {
+			throw new Exception("Kaudze ir tukša un to nevar izprintēt");
+		}
+		
+		return searchHelper(rootNode, elem);
+	}
+	
+	private boolean searchHelper(MyNode<Ttype> nodeTemp, Ttype elem) {
+		if(nodeTemp != null) {
+			//ja sakrit tad atgriezam ka ir atrasts
+			if(nodeTemp.getElement().equals(elem)) {
+				return true;
+			}
+			//turpina meklet
+			else {
+				//meklesana notiks pa labo pusi
+				if(((Comparable)elem).compareTo(nodeTemp.getElement()) > 0) {
+					//parbauda vai eksisste labais node
+					if (nodeTemp.getRightChNode() == null) {
+						return false;
+					}
+					// ja eksiste turpia na iteraciju
+					else {
+						return searchHelper(nodeTemp.getRightChNode(), elem);
+					}
+				}
+				else {
+					if (nodeTemp.getLeftChNode() == null) {
+						return false;
+					}
+					else {
+						return searchHelper(nodeTemp.getLeftChNode(), elem);
+					}	
+				}	
+			}
+		}
+		return false;
+	}
+	
+	
 	
 	
 }
